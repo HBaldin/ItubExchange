@@ -6,6 +6,6 @@ namespace ItubExchange.Core.Entities
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public decimal ExchangeRate { get; set; }
+        public double ExchangeRate { get; set; }
     }
 }

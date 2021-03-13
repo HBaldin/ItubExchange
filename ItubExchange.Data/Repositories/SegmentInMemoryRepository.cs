@@ -13,9 +13,9 @@ namespace ItubExchange.Data.Repositories
         {
             this.database = new List<Segment>()
             {
-                new Segment{ Name = "Varejo", ExchangeRate = 0.5M, Id = Guid.NewGuid()},
-                new Segment{ Name = "Personalitte", ExchangeRate = 0.3M, Id = Guid.NewGuid()},
-                new Segment{ Name = "Private", ExchangeRate = 0.1M, Id = Guid.NewGuid()}
+                new Segment{ Name = "Varejo", ExchangeRate = 0.5, Id = Guid.NewGuid()},
+                new Segment{ Name = "Personalitte", ExchangeRate = 0.3, Id = Guid.NewGuid()},
+                new Segment{ Name = "Private", ExchangeRate = 0.1, Id = Guid.NewGuid()}
             };
         }
 
