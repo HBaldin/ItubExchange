@@ -49,6 +49,8 @@ namespace ItubExchange.Host
 
             app.UseStaticFiles();
 
+            app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+
             if (!env.IsDevelopment())
             {
                 app.UseSpaStaticFiles();

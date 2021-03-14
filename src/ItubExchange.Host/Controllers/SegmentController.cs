@@ -21,25 +21,25 @@ namespace ItubExchange.Host.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Segment> GetSegments()
+        public IEnumerable<Segment> Get()
         {
             return segmentRepository.GetAll();
         }
 
         [HttpPost]
-        public void AddSegment(Segment segment)
+        public void Post(Segment segment)
         {
             segmentRepository.Create(segment);
         }
 
         [HttpPatch]
-        public void UpdateSegment(Segment segment)
+        public void Update(Segment segment)
         {
             segmentRepository.Update(segment);
         }
 
         [HttpDelete]
-        public void DeleteSegment(Guid id)
+        public void Delete(Guid id)
         {
             var segment = segmentRepository.Get(id);
             segmentRepository.Delete(segment);

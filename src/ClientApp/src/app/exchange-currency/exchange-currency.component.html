@@ -1,0 +1,48 @@
+<!-- Page header -->
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+  <h1 class="h2">Exchange </h1>
+</div>
+
+<!-- Page Content -->
+<div class="row">
+  <div class="col-md-6">
+    <!-- Formulário de exchange -->
+    <form [formGroup]='exchangeForm'>
+      <div class="form-row">
+
+        <!-- Segmento -->
+        <div class="form-group col-md-6">
+          <label for="inputSegment">Segmento</label>
+          <select class="form-control" id="inputSegment" formControlName='segment'>
+            <option *ngFor="let segment of segments; let i = index" [value]="i">
+              {{segments[i].name}}
+            </option>
+          </select>
+        </div>
+
+        <!-- Moeda -->
+        <div class="form-group col-md-6">
+          <label for="inputCurrency">Moeda</label>
+          <select class="form-control" id="inputCurrency" formControlName='currency'>
+            <option *ngFor="let currency of currencies; let i = index" [value]="currencies[i].code">
+              {{currencies[i].code}} | {{currencies[i].name}}  
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Quantidade desejada -->
+      <div class="form-group">
+        <label for="inputQuantity">Quantidade de moeda desejada</label>
+        <input type="text" currencyMask class="form-control" id="inputQuantity" placeholder="1000,00" formControlName='quantity'
+          [options]="{  thousands: '.', decimal: ',', allowNegative:false }">
+      </div>
+
+      <button type="button" class="btn btn-primary" (click)='calcularCotacao()'>Converter</button>
+    </form>
+  </div>
+
+  <div class="col-md-6" *ngIf="cotacao">
+    Total: {{cotacao | currency}}
+  </div>
+</div>

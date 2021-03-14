@@ -1,0 +1,60 @@
+<!-- Page header -->
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+  <h1 class="h2">Moedas </h1>
+</div>
+
+<!-- Segmentos registrados e suas taxas -->
+<div class="row">
+  <!-- Coluna da tabela -->
+  <div class="col-md-6">
+    <table class="table table-sm table-hover">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Moeda</th>
+          <th scope="col">Código</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let currency of currencies; let i = index">
+          <th scope="row">{{i}}</th>
+          <td>{{currency.name}}</td>
+          <td>{{currency.code}}</td>
+          <td>
+            <button type="button" class="btn btn-link btn-sm">
+              Excluir
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- Coluna do formulário -->
+  <div class="col-md-6">
+    <form>
+      <div class="row">
+        <!-- Nome da moeda -->
+        <div class="col">
+          <div class="form-group">
+            <label for="currencyNameInput">Nome da moeda</label>
+            <input type="text" class="form-control" id="currencyNameInput" placeholder="Dogecoin">
+          </div>
+        </div>
+        <!-- Código da moeda -->
+        <div class="col">
+          <div class="form-group">
+            <label for="currencyCodeInput">Código</label>
+            <input type="text" class="form-control" id="currencyCodeInput" placeholder="DGC">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <button type="button" class="btn btn-link">Cadastrar</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+

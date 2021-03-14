@@ -21,25 +21,25 @@ namespace ItubExchange.Host.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Currency> GetCurrencies()
+        public IEnumerable<Currency> Get()
         {
             return currencyRepository.GetAll();
         }
 
         [HttpPost]
-        public void AddCurrency(Currency currency)
+        public void Post(Currency currency)
         {
             this.currencyRepository.Create(currency);
         }
 
         [HttpPatch]
-        public void UpdateCurrency(Currency currency)
+        public void Patch(Currency currency)
         {
             this.currencyRepository.Update(currency);
         }
 
         [HttpDelete]
-        public void DeleteCurrency(Guid id)
+        public void Delete(Guid id)
         {
             var currency = currencyRepository.Get(id);
             currencyRepository.Delete(currency);
