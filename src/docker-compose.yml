@@ -1,0 +1,13 @@
+version: "3.9"
+services:
+  front:
+    build: ./ClientApp
+    ports:
+      - "80:80"
+      - "443:443"
+
+  back:
+    build: .
+    ports:
+      - "3000:80"
+      - "3001:443"
