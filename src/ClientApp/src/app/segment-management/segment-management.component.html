@@ -28,7 +28,7 @@
         <tr *ngFor="let segment of segments; let i = index">
           <th scope="row">{{i}}</th>
           <td>{{segment.name}}</td>
-          <td>{{segment.exchangeTax | number: '1.2-5'}}%</td>
+          <td>{{segment.exchangeTax * 100 | number: '1.2-5'}}%</td>
           <td>
             <button type="button" class="btn btn-link btn-sm" (click)="deleteSegment(segment.id)">
               Excluir
