@@ -1,14 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Currency } from '../models/currency.model';
-
+import { environment } from './../../../environments/environment';
 import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CurrencyService {
-  private readonly API_URL = 'https://localhost:5001';
+  private readonly API_URL = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
 

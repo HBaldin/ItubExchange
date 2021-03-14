@@ -2,12 +2,13 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Segment } from '../models/segment.model';
+import { environment } from './../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SegmentService {
-  private readonly API_URL = 'https://localhost:5001';
+  private readonly API_URL = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
 

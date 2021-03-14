@@ -2,13 +2,15 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
-import { ExchangeRequest } from './DTOs/exchange-request.model';
+import { ExchangeRequest } from './DTOs/exchange-request.model'; 
+import { environment } from './../../../environments/environment';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class ExchangeService {
-  private readonly API_URL = 'https://localhost:5001';
+  private readonly API_URL = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
 

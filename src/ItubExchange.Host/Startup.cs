@@ -52,11 +52,6 @@ namespace ItubExchange.Host
 
             app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 
-            if (!env.IsDevelopment())
-            {
-                app.UseSpaStaticFiles();
-            }
-
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
