@@ -15,4 +15,8 @@ export class CurrencyService {
   getCurrencies(): Observable<Currency[]> {
     return this.http.get<Currency[]>(this.API_URL + `/Currency`);
   }
+
+  addCurrency(newCurrency: Currency): Observable<Currency> {
+    return this.http.post<Currency>(this.API_URL + '/Currency', newCurrency);
+  }
 }

@@ -1,6 +1,6 @@
-import { stringify } from '@angular/compiler/src/util';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { AlertConfig } from '../shared/models/alert-config.model';
 import { Currency } from '../shared/models/currency.model';
 import { CurrencyService } from '../shared/services/currency.service';
 
@@ -10,6 +10,7 @@ import { CurrencyService } from '../shared/services/currency.service';
   styleUrls: ['./currency-management.component.scss']
 })
 export class CurrencyManagementComponent implements OnInit {
+  alertConfig: AlertConfig;
   currencyForm: FormGroup;
   currencies: Currency[];
 
@@ -21,13 +22,46 @@ export class CurrencyManagementComponent implements OnInit {
       currencyName: new FormControl(''),
       currencyCode: new FormControl('')
     });
-    
-    this.currencyService.getCurrencies().subscribe(data => {
-      this.currencies = data
-    });
+
+    //Popula a tabela de moedas cadastradas
+    this.populateCurrenciesGrid();
+  }
+
+  populateCurrenciesGrid() {
+
+    this.currencyService.getCurrencies().subscribe(
+      data => {
+        this.currencies = data
+      },
+      errors => {
+        this.alertConfig = {
+          alertClass: 'danger',
+          alertMessage: errors
+        }
+      });
   }
 
   addNewCurrency() {
+    let form = this.currencyForm.value;
 
+    let newCurrencyRequest = new Currency();
+    newCurrencyRequest.name = form.currencyName;
+    newCurrencyRequest.code = form.currencyCode;
+
+    this.currencyService.addCurrency(newCurrencyRequest).subscribe(
+      response => {
+        this.currencies.push(response);
+        this.alertConfig = {
+          alertClass: 'success',
+          alertMessage: 'Moeda cadastrada com sucesso'
+        };
+      },
+      error => {
+        this.alertConfig = {
+          alertClass: 'danger',
+          alertMessage: error.error
+        }
+      }
+    );
   }
 }

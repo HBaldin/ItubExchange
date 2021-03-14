@@ -3,8 +3,15 @@
   <h1 class="h2">Moedas </h1>
 </div>
 
-<!-- Segmentos registrados e suas taxas -->
+<!-- Alert -->
+<div class="row" *ngIf="alertConfig">
+  <div class="col-12">
+    <app-alert [alertConfig]="alertConfig"></app-alert>
+  </div>
+</div>
+
 <div class="row">
+
   <!-- Coluna da tabela -->
   <div class="col-md-6">
     <table class="table table-sm table-hover">
@@ -30,31 +37,34 @@
       </tbody>
     </table>
   </div>
+
   <!-- Coluna do formulário -->
   <div class="col-md-6">
-    <form>
+    <form [formGroup]="currencyForm">
       <div class="row">
         <!-- Nome da moeda -->
         <div class="col">
           <div class="form-group">
             <label for="currencyNameInput">Nome da moeda</label>
-            <input type="text" class="form-control" id="currencyNameInput" placeholder="Dogecoin">
+            <input type="text" class="form-control" id="currencyNameInput" formControlName="currencyName"
+              placeholder="Dogecoin">
           </div>
         </div>
         <!-- Código da moeda -->
         <div class="col">
           <div class="form-group">
             <label for="currencyCodeInput">Código</label>
-            <input type="text" class="form-control" id="currencyCodeInput" placeholder="DGC">
+            <input type="text" class="form-control" id="currencyCodeInput" formControlName="currencyCode" maxlength="3"
+              minlength="3" placeholder="DGC">
           </div>
         </div>
       </div>
       <div class="row">
         <div class="col">
-          <button type="button" class="btn btn-link">Cadastrar</button>
+          <button type="button" class="btn btn-link" [disabled]="currencyForm.pristine || currencyForm.invalid"
+            (click)="addNewCurrency()">Cadastrar</button>
         </div>
       </div>
     </form>
   </div>
 </div>
-

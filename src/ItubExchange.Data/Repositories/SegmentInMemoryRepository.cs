@@ -13,14 +13,17 @@ namespace ItubExchange.Data.Repositories
         {
             this.database = new List<Segment>()
             {
-                new Segment{ Name = "Varejo", ExchangeRate = 0.5, Id = Guid.NewGuid()},
-                new Segment{ Name = "Personalitte", ExchangeRate = 0.3, Id = Guid.NewGuid()},
-                new Segment{ Name = "Private", ExchangeRate = 0.1, Id = Guid.NewGuid()}
+                new Segment{ Name = "Varejo", ExchangeTax = 0.5, Id = Guid.NewGuid()},
+                new Segment{ Name = "Personalitte", ExchangeTax = 0.3, Id = Guid.NewGuid()},
+                new Segment{ Name = "Private", ExchangeTax = 0.1, Id = Guid.NewGuid()}
             };
         }
 
         public void Create(Segment obj)
         {
+            if (obj.Id == Guid.Empty)
+                obj.Id = Guid.NewGuid();
+
             this.database.Add(obj);
         }
 

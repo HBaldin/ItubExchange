@@ -11,6 +11,8 @@ import { ExchangeService } from './shared/services/exchange.service';
 import { NgxCurrencyModule } from "ngx-currency";
 import { CurrencyManagementComponent } from './currency-management/currency-management.component';
 import { HttpClientModule } from '@angular/common/http';
+import { AlertComponent } from './shared/components/alert/alert.component';
+import { OnlyNumbersDirective } from './shared/directives/only-numbers.directive';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { HttpClientModule } from '@angular/common/http';
     ExchangeCurrencyComponent,
     SegmentManagementComponent,
     SidebarMenuComponent,
-    CurrencyManagementComponent
+    CurrencyManagementComponent,
+    AlertComponent,
+    OnlyNumbersDirective
   ],
   imports: [
     BrowserModule,

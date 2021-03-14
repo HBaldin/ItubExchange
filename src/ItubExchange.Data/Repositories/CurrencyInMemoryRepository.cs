@@ -20,6 +20,8 @@ namespace ItubExchange.Data.Repositories
 
         public void Create(Currency obj)
         {
+            if (obj.Id == Guid.Empty)
+                obj.Id = Guid.NewGuid();
             this.database.Add(obj);
         }
 

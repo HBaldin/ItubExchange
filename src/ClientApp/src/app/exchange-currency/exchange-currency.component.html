@@ -3,6 +3,13 @@
   <h1 class="h2">Exchange </h1>
 </div>
 
+<!-- Alert -->
+<div class="row" *ngIf="alertConfig">
+  <div class="col-12">
+    <app-alert [alertConfig]="alertConfig"></app-alert>
+  </div>
+</div>
+
 <!-- Page Content -->
 <div class="row">
   <div class="col-md-6">
@@ -14,7 +21,7 @@
         <div class="form-group col-md-6">
           <label for="inputSegment">Segmento</label>
           <select class="form-control" id="inputSegment" formControlName='segment'>
-            <option *ngFor="let segment of segments; let i = index" [value]="i">
+            <option *ngFor="let segment of segments; let i = index" [value]="segment.id">
               {{segments[i].name}}
             </option>
           </select>
@@ -24,8 +31,8 @@
         <div class="form-group col-md-6">
           <label for="inputCurrency">Moeda</label>
           <select class="form-control" id="inputCurrency" formControlName='currency'>
-            <option *ngFor="let currency of currencies; let i = index" [value]="currencies[i].code">
-              {{currencies[i].code}} | {{currencies[i].name}}  
+            <option *ngFor="let currency of currencies; let i = index" [value]="currencies[i].id">
+              {{currencies[i].code}} | {{currencies[i].name}}
             </option>
           </select>
         </div>
@@ -33,16 +40,18 @@
 
       <!-- Quantidade desejada -->
       <div class="form-group">
-        <label for="inputQuantity">Quantidade de moeda desejada</label>
-        <input type="text" currencyMask class="form-control" id="inputQuantity" placeholder="1000,00" formControlName='quantity'
-          [options]="{  thousands: '.', decimal: ',', allowNegative:false }">
+        <label for="inputQuantity">Quantidade de moeda</label>
+        <input type="text" currencyMask class="form-control" id="inputQuantity" placeholder="1000,00"
+          formControlName='quantity' [options]="{ thousands: '.', decimal: ',', allowNegative:false }">
       </div>
 
-      <button type="button" class="btn btn-primary" (click)='calcularCotacao()'>Converter</button>
+      <button type="button" class="btn btn-primary" [disabled]="exchangeForm.pristine || exchangeForm.invalid"
+        (click)='calculateExchangeValue()'>Converter</button>
     </form>
   </div>
 
-  <div class="col-md-6" *ngIf="cotacao">
-    Total: {{cotacao | currency}}
+  <!-- Seção de resultado -->
+  <div class="col-md-6" *ngIf="exchangeResult">
+    Custo total: R$ {{exchangeResult.value | number: '1.2-2'}}
   </div>
 </div>

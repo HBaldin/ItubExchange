@@ -3,17 +3,19 @@
   <h1 class="h2">Segmentos </h1>
 </div>
 
-<div class="row">
-  <!-- Adicionar novo Segmento -->
-  <div class="col-md-12">
-    <button type="button" class="btn btn-primary"><i class="bi bi-plus"></i></button>
+<!-- Alert -->
+<div class="row" *ngIf="alertConfig">
+  <div class="col-12">
+    <app-alert [alertConfig]="alertConfig"></app-alert>
   </div>
 </div>
 
-<!-- Segmentos registrados e suas taxas -->
+
 <div class="row">
-  <div class="col-md-12">
-    <table class="table">
+
+  <!-- Segmentos registrados e suas taxas -->
+  <div class="col-md-6">
+    <table class="table table-sm table-hover">
       <thead>
         <tr>
           <th scope="col">#</th>
@@ -23,30 +25,47 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <th scope="row">1</th>
-          <td>Varejo</td>
-          <td>5%</td>
+        <tr *ngFor="let segment of segments; let i = index">
+          <th scope="row">{{i}}</th>
+          <td>{{segment.name}}</td>
+          <td>{{segment.exchangeTax | number: '1.2-5'}}%</td>
           <td>
-            <button type="button" class="btn btn-warning btn-sm">
-              <i class="bi bi-pencil"></i>
-            </button>
-            <button type="button" class="btn btn-danger btn-sm">
-              <i class="bi bi-trash"></i>
+            <button type="button" class="btn btn-link btn-sm" (click)="deleteSegment(segment.id)">
+              Excluir
             </button>
           </td>
         </tr>
-        <tr>
-          <th scope="row">2</th>
-          <td>Personnalite</td>
-          <td>3%</td>
-        </tr>
-        <tr>
-          <th scope="row">3</th>
-          <td>Private</td>
-          <td>1%</td>
-        </tr>
       </tbody>
     </table>
+  </div>
+
+  <!-- Coluna do formulário -->
+  <div class="col-md-6">
+    <form [formGroup]="segmentForm">
+      <div class="row">
+        <!-- Nome do segmento -->
+        <div class="col">
+          <div class="form-group">
+            <label for="segmentNameInput">Nome do segmento</label>
+            <input type="text" class="form-control" id="segmentNameInput" formControlName="segmentName"
+              placeholder="Varejo">
+          </div>
+        </div>
+        <!-- Taxa -->
+        <div class="col">
+          <div class="form-group">
+            <label for="segmentTaxInput">Taxa em %</label>
+            <input type="number" class="form-control" id="segmentTaxInput" formControlName="segmentTax" onlyNumber
+              placeholder="0.00">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <button type="button" class="btn btn-link" [disabled]="segmentForm.pristine || segmentForm.invalid"
+            (click)="addNewSegment()">Cadastrar</button>
+        </div>
+      </div>
+    </form>
   </div>
 </div>
