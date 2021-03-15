@@ -7,6 +7,8 @@ suas taxas e as moedas disponíveis para câmbio.
 
 * [Tecnologias](#Tecnologias)
   * [Arquitetura](#Arquitetura)
+    * [Clean architecture](#clean-architecture)
+    * [Componentes](#principais-componentes)
 * [Screenshots](#screenshots)
   * [Tela de câmbio](#tela-de-câmbio)
   * [Tela de segmentos](#tela-de-cadastro-de-segmentos)
@@ -26,21 +28,52 @@ suas taxas e as moedas disponíveis para câmbio.
 
 ## Arquitetura
 
+### Clean Architecture
 
+A aplicação utiliza um estilo de arquitetura proposto por Robert C. Martin conhecida como __clean architecture__, onde as diferentes partes do sistema possuem um baixo grau de dependência, resultando em uma fácil manutenibilidade e testabilidade.  
+
+O fluxo dos dados sempre flui das camadas mais externas para as mais internas, onde as camadas internas não tem referência as camadas superiores a elas, permitindo que regras de negócio possam ser isoladas e testadas de maneira independente.  
+
+Este modelo também permite que a interface com o usuário (frontend) não interfira no funcionamento geral do sistema, assim como mudanças tanto de provedores externos quanto diferentes formas de consumo de APIs, bastando reimplementar a interface esperada pelos casos de uso.
+
+![Clean architecture](./images/clean-architecture.jpg)
+
+Cada funcionalidade do sistema conta com seu caso de uso, onde suas portas de entradas e saídas possuem contratos definidos.
+
+![Information flow](./images/clean-architecture-flow.jpg)
+
+### Principais Componentes
+
+A aplicação conta com 3 principais componentes, a interface com o usuário (Frontend em Angular 11),
+a API (.NET 5) e a API externa responsável por prover a taxa de câmbio atualizada.  
+
+As ações de cotação, gerênciamento de segmentos e moedas são enviadas e processadas pela API de backend antes de terem seus resultados refletidos em tela.
+
+![Componentes](./images/ItubExchangeDiagram-Componentes.png)
+
+O processo de cotação ocorre da seguinte maneira:
+
+1. As informações de segmento, moeda e quantidade são inseridas na aplicação.
+2. As informações são enviadas para a API do backend.
+3. A API de backend consulta a API da ExchangeRates para recuperar taxa de conversão atualizada para a moeda selecionada.
+4. Com a taxa de conversão correta, a aplicação realiza a conta levando em consideração a taxa para o segmento do cliente escolhido.
+5. O resultado da cotação é retornado, onde a aplicação de frontend exibe o valor final da cotação
+
+![Fluxo de cotação](./images/ItubExchangeDiagram-Processo-cotação.png)
 
 ## Screenshots
 
 ### Tela de câmbio
 
-![Exchange screen screenshot](./screenshots/exchange-screen.png)
+![Exchange screen screenshot](./images/exchange-screen.png)
 
 ### Tela de cadastro de Segmentos
 
-![Segmenets screen screenshot](./screenshots/segments-screen.png)
+![Segmenets screen screenshot](./images/segments-screen.png)
 
 ### Tela de cadastro de Moedas
 
-![Currency screen screenshot](./screenshots/segments-screen.png)
+![Currency screen screenshot](./images/segments-screen.png)
 
 ## Setup
 
