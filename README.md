@@ -17,6 +17,8 @@ suas taxas e as moedas disponíveis para câmbio.
   * [Iniciando o Frontend](#iniciando-o-frontend)
   * [Iniciando o Backend](#iniciando-o-backend)
   * [Iniciando com docker compose](#iniciando-utilizando-o-docker-compose)
+  * [Recuperando imagens mais recentes](#recuperando-imagens-mais-recentes)
+  * [APIs Swagger](#swagger)
 * [Features](#features)
 
 ## Tecnologias
@@ -25,6 +27,7 @@ suas taxas e as moedas disponíveis para câmbio.
 * .NET 5.0
 * Docker
 * NGINX
+* Swagger
 
 ## Arquitetura
 
@@ -109,6 +112,16 @@ docker-compose -f "src\docker-compose.yml" up -d --build
 ```
 
 A configuração padrão determina que a aplicação de __frontend__ irá estar disponível em `http://localhost/` e a API irá estar disponível em `http://localhost:3000/`.
+
+### Recuperando imagens mais recentes
+
+Caso deseje baixar as imagens mais recentes do repositório publico do dockerhub, pode-se utilizar as imagens: `hbaldin/itubexchange-front:latest` e `hbaldin/itubexchange-api:latest` para o front e o backend respectivamente.
+
+### Swagger
+
+A API conta com uma UI do swagger onde é possível ver os endpoints, métodos e modelos utilizados por todas as ações disponíveis servidas pela API. Para ver a página do Swagger, basta acessar `http://localhost:3000/swagger` caso esteja utilizando o docker compose, ou acessar a página `http://localhost:5000` caso esteja utilizando  o debug do visual studio.
+
+![Swagger](./images/swagger.png)
 
 ## Features
 
