@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 
 namespace ItubExchange.Host
 {
@@ -34,6 +35,11 @@ namespace ItubExchange.Host
             services.AddSingleton<ICurrencyRepository, CurrencyInMemoryRepository>();
             services.AddSingleton<ISegmentRepository, SegmentInMemoryRepository>();
 
+            //add this method
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "ItubExchange API", Version = "v1" });
+            });
             services.AddControllersWithViews();
         }
 
@@ -50,6 +56,13 @@ namespace ItubExchange.Host
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            //and these two methods
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "ItubExchange API V1");
+            });
 
             app.UseHttpsRedirection();
 
