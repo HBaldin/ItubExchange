@@ -40,12 +40,17 @@ namespace ItubExchange.Host
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ItubExchange API", Version = "v1" });
             });
+
+            services.AddCors();
+
             services.AddControllersWithViews();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().SetIsOriginAllowedToAllowWildcardSubdomains());
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -64,14 +69,10 @@ namespace ItubExchange.Host
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "ItubExchange API V1");
             });
 
-            app.UseHttpsRedirection();
-
             app.UseStaticFiles();
 
-            app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
-
             app.UseRouting();
-
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

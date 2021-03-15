@@ -1,13 +1,28 @@
 version: "3.9"
 services:
   front:
+    container_name: FrontEnd
     build: ./ClientApp
     ports:
       - "80:80"
       - "443:443"
+    networks:
+      - itubnetwork
+    links:
+      - "restapi"
+    external_links:
+      - "restapi" 
 
-  back:
+  restapi:
+    container_name: Backend
     build: .
     ports:
       - "3000:80"
       - "3001:443"
+    networks:
+      - itubnetwork
+    external_links:
+      - "front"
+networks:
+  itubnetwork:
+    driver: bridge

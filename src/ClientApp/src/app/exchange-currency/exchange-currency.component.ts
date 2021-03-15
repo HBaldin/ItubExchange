@@ -49,7 +49,7 @@ export class ExchangeCurrencyComponent implements OnInit {
       errors => {
         this.alertConfig = {
           alertClass: 'danger',
-          alertMessage: errors
+          alertMessage: 'Não foi possível carregar informações da API'
         }
       });
   }
@@ -62,7 +62,7 @@ export class ExchangeCurrencyComponent implements OnInit {
       errors => {
         this.alertConfig = {
           alertClass: 'danger',
-          alertMessage: errors
+          alertMessage: 'Não foi possível carregar informações da API'
         }
       });
   }
