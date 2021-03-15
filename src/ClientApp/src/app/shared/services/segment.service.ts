@@ -16,8 +16,13 @@ export class SegmentService {
     return this.http.get<Segment[]>(this.API_URL + '/Segment');
   }
 
-  addSegment(newSegmentRequest: Segment): Observable<Segment> {
-    return this.http.post<Segment>(this.API_URL + '/Segment', newSegmentRequest);
+  addSegment(segment: Segment): Observable<Segment> {
+    segment.id = undefined;
+    return this.http.post<Segment>(this.API_URL + '/Segment', segment);
+  }
+
+  updateSegment(segment: Segment) {
+    return this.http.patch(this.API_URL + '/Segment', segment);
   }
 
   deleteSegment(segmentId: string) {

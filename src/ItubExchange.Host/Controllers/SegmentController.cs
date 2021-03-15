@@ -36,6 +36,17 @@ namespace ItubExchange.Host.Controllers
         [HttpPatch]
         public IActionResult Update([FromBody] Segment segment)
         {
+            if (segment == null)
+                return BadRequest("Nenhum segmento recebido");
+
+            if (segment.Id == Guid.Empty)
+                return BadRequest("Id do segmento não informado");
+
+            var seg = segmentRepository.Get(segment.Id);
+
+            if (seg == null)
+                return NotFound("Segmento não encontrado");
+
             segmentRepository.Update(segment);
             return Ok();
         }

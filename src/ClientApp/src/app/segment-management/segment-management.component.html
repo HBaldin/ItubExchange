@@ -30,6 +30,9 @@
           <td>{{segment.name}}</td>
           <td>{{segment.exchangeTax * 100 | number: '1.2-5'}}%</td>
           <td>
+            <button type="button" class="btn btn-link btn-sm" (click)="populateForm(segment)">
+              Editar
+            </button>
             <button type="button" class="btn btn-link btn-sm" (click)="deleteSegment(segment.id)">
               Excluir
             </button>
@@ -54,16 +57,24 @@
         <!-- Taxa -->
         <div class="col">
           <div class="form-group">
-            <label for="segmentTaxInput">Taxa em %</label>
+            <label for="segmentTaxInput">Taxa</label>
             <input type="number" class="form-control" id="segmentTaxInput" formControlName="segmentTax" onlyNumber
               placeholder="0.00">
           </div>
         </div>
+        <!-- Id hidden -->
+        <div class="d-none">
+          <input type="text" id="segmentId" formControlName="segmentId">
+        </div>
       </div>
       <div class="row">
         <div class="col">
-          <button type="button" class="btn btn-link" [disabled]="segmentForm.pristine || segmentForm.invalid"
-            (click)="addNewSegment()">Cadastrar</button>
+          <button type="button" class="btn btn-link" id="addOrUpdatebutton" [disabled]="segmentForm.pristine || segmentForm.invalid" 
+            (click)="addOrUpdateSegment()">Cadastrar</button>
+        </div>
+        <div class="col" *ngIf="formInEditMode">
+          <button type="button" class="btn btn-link" id="resetFormButton"
+          (click)="resetForm()">Cancelar</button>
         </div>
       </div>
     </form>

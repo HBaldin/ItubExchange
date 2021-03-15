@@ -13,12 +13,14 @@ export class SegmentManagementComponent implements OnInit {
   alertConfig: AlertConfig;
   segments: Segment[];
   segmentForm: FormGroup;
+  formInEditMode: boolean;
 
   constructor(private fb: FormBuilder,
     private segmentService: SegmentService) { }
 
   ngOnInit(): void {
     this.segmentForm = this.fb.group({
+      segmentId: new FormControl(''),
       segmentName: new FormControl('', Validators.required),
       segmentTax: new FormControl('', [Validators.required, Validators.min(0)])
     });
@@ -40,14 +42,24 @@ export class SegmentManagementComponent implements OnInit {
       });
   }
 
-  addNewSegment() {
+  addOrUpdateSegment() {
     let form = this.segmentForm.value;
 
     let newSegmentRequest = new Segment();
     newSegmentRequest.name = form.segmentName;
     newSegmentRequest.exchangeTax = form.segmentTax;
+    newSegmentRequest.id = form.segmentId;
 
-    this.segmentService.addSegment(newSegmentRequest).subscribe(
+    if (newSegmentRequest.id == "") {
+      this.addNewSegment(newSegmentRequest);
+    } else {
+      this.updateSegment(newSegmentRequest);
+
+    }
+  }
+
+  addNewSegment(segment: Segment) {
+    this.segmentService.addSegment(segment).subscribe(
       response => {
         this.segments.push(response);
         this.alertConfig = {
@@ -58,10 +70,47 @@ export class SegmentManagementComponent implements OnInit {
       error => {
         this.alertConfig = {
           alertClass: 'danger',
-          alertMessage: error
+          alertMessage: 'Não foi possível cadastrar um novo segmento'
         }
       }
     );
+  }
+
+  updateSegment(segment: Segment) {
+    this.segmentService.updateSegment(segment).subscribe(
+      response => {
+        //Atualiza o grid
+        let existingSegment = this.segments.find(s => s.id === segment.id);
+        existingSegment.exchangeTax = segment.exchangeTax;
+
+        //Exibe o alerta
+        this.alertConfig = {
+          alertClass: 'success',
+          alertMessage: 'Segmento atualizado com sucesso'
+        };
+
+        //Reseta o formulário
+        this.resetForm();
+      },
+      error => {
+        this.alertConfig = {
+          alertClass: 'danger',
+          alertMessage: error
+        }
+      }
+    )
+  }
+
+  populateForm(segment: Segment) {
+    this.segmentForm.patchValue({
+      segmentName: segment.name,
+      segmentTax: segment.exchangeTax,
+      segmentId: segment.id
+    });
+
+    document.getElementById("addOrUpdatebutton").innerHTML = "Atualizar";
+
+    this.formInEditMode = true;
   }
 
   deleteSegment(segmentId: string) {
@@ -74,5 +123,17 @@ export class SegmentManagementComponent implements OnInit {
         }
       }
     )
+  }
+
+  resetForm() {
+    this.segmentForm.patchValue({
+      segmentName: '',
+      segmentTax: '',
+      segmentId: ''
+    });
+
+    document.getElementById("addOrUpdatebutton").innerHTML = "Cadastrar";
+
+    this.formInEditMode = false;
   }
 }
