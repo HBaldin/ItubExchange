@@ -1,5 +1,4 @@
-﻿using ItubExchange.Core.Repositories;
-using ItubExchange.Core.Services;
+﻿using ItubExchange.Core.UseCases.Exchange;
 using ItubExchange.Host.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -10,33 +9,28 @@ namespace ItubExchange.Host.Controllers
     public class ExchangeController : Controller
     {
         private readonly ILogger<ExchangeController> logger;
-        private readonly IExchangeService exchangeService;
-        private readonly ISegmentRepository segmentRepository;
-        private readonly ICurrencyRepository currencyRepository;
+        private readonly IExchangeUseCase exchangeUseCase;
 
         public ExchangeController(ILogger<ExchangeController> logger,
-            IExchangeService exchangeService,
-            ISegmentRepository segmentRepository,
-            ICurrencyRepository currencyRepository)
+            IExchangeUseCase exchangeUseCase)
         {
             this.logger = logger;
-            this.exchangeService = exchangeService;
-            this.segmentRepository = segmentRepository;
-            this.currencyRepository = currencyRepository;
+            this.exchangeUseCase = exchangeUseCase;
         }
 
         [HttpPost("CalculateExchangeValue")]
         public IActionResult CalculateExchangeValue([FromBody] CalculateExchangeValueInput input)
         {
-            logger.LogInformation($"Recebido pedido de cotação: \nQuantidade:{input.Quantity} \nSegmento:{input.SegmentId} \nMoeda:{input.CurrencyId} ");
-            var currency = currencyRepository.Get(input.CurrencyId);
-            var segment = segmentRepository.Get(input.SegmentId);
+            var useCaseInput = new ExchangeUseCaseInput
+            {
+                CurrencyId = input.CurrencyId,
+                SegmentId = input.SegmentId,
+                Quantity = input.Quantity
+            };
 
-            var exchangeRate = exchangeService.GetExchangeRate(currency.Code);
+            var useCaseOutput = this.exchangeUseCase.PerformOperation(useCaseInput);
 
-            var exchangeValue = (input.Quantity * exchangeRate) * (1 + segment.ExchangeTax);
-
-            return Ok(exchangeValue);
+            return Ok(useCaseOutput.ExchangeValue);
         }
     }
 }

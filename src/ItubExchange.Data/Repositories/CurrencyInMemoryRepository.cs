@@ -13,7 +13,7 @@ namespace ItubExchange.Data.Repositories
         {
             database = new List<Currency>()
             {
-                new Currency{Name = "Dolar", Code = "USD", Id = Guid.NewGuid()},
+                new Currency{Name = "Dólar", Code = "USD", Id = Guid.NewGuid()},
                 new Currency{Name = "Euro", Code = "EUR", Id = Guid.NewGuid()}
             };
         }

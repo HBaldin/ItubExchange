@@ -64,4 +64,16 @@ export class CurrencyManagementComponent implements OnInit {
       }
     );
   }
+
+  deleteCurrency(currencyId: string) {
+    this.currencyService.deleteCurrency(currencyId).subscribe(
+      response => {
+        this.currencies = this.currencies.filter(s => s.id !== currencyId);
+        this.alertConfig = {
+          alertClass: 'success',
+          alertMessage: 'Moeda removida com sucesso'
+        }
+      }
+    )
+  }
 }

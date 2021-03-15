@@ -1,5 +1,7 @@
+using ItubExchange.Application.UseCases;
 using ItubExchange.Core.Repositories;
 using ItubExchange.Core.Services;
+using ItubExchange.Core.UseCases.Exchange;
 using ItubExchange.Data.Repositories;
 using ItubExchange.Data.Services;
 using Microsoft.AspNetCore.Builder;
@@ -22,6 +24,9 @@ namespace ItubExchange.Host
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //Use cases
+            services.AddScoped<IExchangeUseCase, ExchangeUseCase>();
+
             //Services
             services.AddScoped<IExchangeService, ExchangeService>();
 

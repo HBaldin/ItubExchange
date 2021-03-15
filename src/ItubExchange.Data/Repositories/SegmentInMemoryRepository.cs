@@ -15,7 +15,7 @@ namespace ItubExchange.Data.Repositories
             {
                 new Segment{ Name = "Varejo", ExchangeTax = 0.05, Id = Guid.NewGuid()},
                 new Segment{ Name = "Personalitte", ExchangeTax = 0.03, Id = Guid.NewGuid()},
-                new Segment{ Name = "Private", ExchangeTax = 1, Id = Guid.NewGuid()}
+                new Segment{ Name = "Private", ExchangeTax = 0.01, Id = Guid.NewGuid()}
             };
         }
 

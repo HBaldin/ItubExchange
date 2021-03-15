@@ -29,7 +29,7 @@
           <td>{{currency.name}}</td>
           <td>{{currency.code}}</td>
           <td>
-            <button type="button" class="btn btn-link btn-sm">
+            <button type="button" class="btn btn-link btn-sm" (click)="deleteCurrency(currency.id)">
               Excluir
             </button>
           </td>
